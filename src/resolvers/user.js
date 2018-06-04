@@ -2,20 +2,17 @@ import User from '../models/user';
 
 export default {
   Query: {
-    Users: async () => {
+    getUsers: async () => {
       const cats = await User.find();
       return cats;
     },
-    User: async (parent, args) => {
-      console.log(args);
-      const user = await User.findOne(args);
-      return user;
-    },
-  },
-  Mutation: {
-    createUser: async (parent, args) => {
-      const user = new User(args).save();
-      return user;
+    getUserById: async (parent, args) => {
+      try {
+        const user = await User.findOne(args);
+        return user;
+      } catch (error) {
+        return error;
+      }
     },
   },
 };

@@ -1,2 +1,2 @@
 # GraphQL API Boilerplate
-Made this while trying out GraphQL. Was trying to make a GraphQL version of my other API boilerplate  [eliasjohansson/express-api-boilerplate](https://github.com/eliasjohansson/express-api-boilerplate)
+Made this while trying out GraphQL. Meant to be a GraphQL version of my other API boilerplate  [eliasjohansson/express-api-boilerplate](https://github.com/eliasjohansson/express-api-boilerplate)

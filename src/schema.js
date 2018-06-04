@@ -1,17 +1,13 @@
-import { mergeSchemas, makeExecutableSchema } from 'graphql-tools';
-import typeDefs from './schemas';
-import resolvers from './resolvers';
+import { makeExecutableSchema } from 'graphql-tools';
+import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
+import path from 'path';
 
-const schemas = [];
+const typesArray = fileLoader(path.join(__dirname, './schemas/*.graphql'));
+const typeDefs = mergeTypes(typesArray, { all: true });
 
-for (let i = 0; i < typeDefs.length; i += 1) {
-  const schema = makeExecutableSchema({
-    typeDefs: typeDefs[i],
-    resolvers: resolvers[i],
-  });
-  schemas.push(schema);
-}
+const resolversArray = fileLoader(path.join(__dirname, './resolvers'));
+const resolvers = mergeResolvers(resolversArray);
 
-const schema = mergeSchemas({ schemas });
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 export default schema;
