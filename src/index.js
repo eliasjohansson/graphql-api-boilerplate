@@ -4,6 +4,7 @@ import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import { formatError } from 'apollo-errors';
 import schema from './schema';
 import { PORT, MONGO_URI } from './utils/dotenv';
 import jwtMiddleware from './utils/jwt-middleware';
@@ -18,6 +19,7 @@ app.use(jwtMiddleware);
 app.use(
   '/graphql',
   graphqlExpress(req => ({
+    formatError,
     schema,
     context: {
       user: req.user,
