@@ -6,14 +6,24 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import schema from './schema';
 import { PORT, MONGO_URI } from './utils/dotenv';
+import jwtMiddleware from './utils/jwt-middleware';
 
 const app = express();
 const server = http.Server(app);
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(jwtMiddleware);
 
-app.use('/graphql', graphqlExpress({ schema }));
+app.use(
+  '/graphql',
+  graphqlExpress(req => ({
+    schema,
+    context: {
+      user: req.user,
+    },
+  })),
+);
 app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 
