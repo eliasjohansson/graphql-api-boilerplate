@@ -1,19 +1,22 @@
-import jwt from 'jwt-simple';
+import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from './dotenv';
 import User from '../models/user';
 
-function extractTokenPayload(token) {
-  const splitToken = token.split(' ');
-  const payload = jwt.decode(splitToken[1], JWT_SECRET);
-  return payload;
-}
-
 const jwtMiddleware = async (req, res, next) => {
-  if (req.headers.authorization) {
-    const userId = extractTokenPayload(req.headers.authorization);
-    const user = await User.findById(userId).exec();
-    if (user) {
-      req.user = user;
+  const { authorization } = req.headers;
+  if (authorization) {
+    try {
+      const splitToken = authorization.split(' ');
+      const payload = await jwt.verify(splitToken[1], JWT_SECRET);
+      if (payload) {
+        const user = await User.findById(payload.id).exec();
+        if (user) {
+          req.user = user;
+        }
+      }
+    } catch (err) {
+      // TODO: HANDLE ERROR - create error for expired token
+      console.log(err);
     }
   }
   next();

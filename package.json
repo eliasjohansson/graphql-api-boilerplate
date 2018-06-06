@@ -4,6 +4,10 @@
   "main": "src/index.js",
   "author": "Elias Johansson",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eliasjohansson/graphql-server-boilerplate.git"
+  },
   "scripts": {
     "start": "nodemon -e js,graphql,gql src/index.js --exec babel-node --presets env",
     "build": "babel src -d dist",
@@ -31,7 +35,7 @@
     "express": "^4.16.3",
     "graphql": "^0.13.2",
     "graphql-tools": "^3.0.2",
-    "jwt-simple": "^0.5.1",
+    "jsonwebtoken": "^8.2.2",
     "merge-graphql-schemas": "^1.5.1",
     "moment-timezone": "^0.5.17",
     "mongoose": "^5.1.3",
