@@ -1,0 +1,7 @@
+GraphQL Server: 
+  ☐ Simplify resolvers to just return a promise
+  ✔ Attach db models to context @done(18-06-07 20:17)
+  ☐ Handle error for expired token (utils->jwt-middleware.js)
+  ☐ Create 'Post' schema with CRUD resolvers.
+
+  ☐ Investigate using Dataloader, for example to load db models

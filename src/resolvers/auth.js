@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
 import { JWT_SECRET } from '../utils/dotenv';
 import { isNotAuthenticated } from '../utils/permissions';
 
@@ -10,9 +9,9 @@ const createToken = async (userId) => {
 };
 
 // RESOLVERS
-const register = isNotAuthenticated.createResolver(async (parent, args) => {
+const register = isNotAuthenticated.createResolver(async (parent, args, { models }) => {
   try {
-    let user = new User(args);
+    let user = new models.User(args);
     user = await user.save();
     const token = createToken(user.id);
     return { token, user };
@@ -21,10 +20,10 @@ const register = isNotAuthenticated.createResolver(async (parent, args) => {
   }
 });
 
-const login = isNotAuthenticated.createResolver(async (parent, args) => {
+const login = isNotAuthenticated.createResolver(async (parent, args, { models }) => {
   const { password, email } = args;
   try {
-    const user = await User.findOne({ email }).select('+password').exec();
+    const user = await models.User.findOne({ email }).select('+password').exec();
     if (await user.comparePasswords(password)) {
       const token = await createToken(user.id);
       console.log(`TOKEN: ${token}`);

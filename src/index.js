@@ -8,6 +8,7 @@ import { formatError } from 'apollo-errors';
 import schema from './schema';
 import { PORT, MONGO_URI } from './utils/dotenv';
 import jwtMiddleware from './utils/jwt-middleware';
+import models from './models';
 
 const app = express();
 const server = http.Server(app);
@@ -23,6 +24,7 @@ app.use(
     schema,
     context: {
       user: req.user,
+      models,
     },
   })),
 );

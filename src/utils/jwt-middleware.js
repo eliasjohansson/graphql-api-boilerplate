@@ -15,11 +15,9 @@ const jwtMiddleware = async (req, res, next) => {
         }
       }
     } catch (err) {
-      // TODO: HANDLE ERROR - create error for expired token
       console.log(err);
     }
   }
   next();
 };
-
 export default jwtMiddleware;
