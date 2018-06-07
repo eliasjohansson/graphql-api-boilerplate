@@ -16,6 +16,7 @@ const baseResolver = createResolver(
     return new UnkownError({
       data: {
         name: err.name,
+        details: err.message,
       },
     });
   },

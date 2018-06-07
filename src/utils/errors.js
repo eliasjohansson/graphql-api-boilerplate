@@ -12,10 +12,6 @@ export const AlreadyAuthenticatedError = createError('AlreadyAuthenticatedError'
   message: 'You are already authenticated',
 });
 
-const NotFoundError = createError('NotFoundError', {
+export const NotFoundError = createError('NotFoundError', {
   message: 'What you are looking for cannot be found.',
-});
-
-export const DetailedNotFoundError = (type, args) => new NotFoundError({
-  data: { type, args },
 });
