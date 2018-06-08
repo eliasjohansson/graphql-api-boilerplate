@@ -1,6 +1,7 @@
 GraphQL Server: 
-  ☐ Simplify resolvers to just return a promise
+  ✔ Simplify resolvers to just return a promise @done(18-06-07 20:31)
   ✔ Attach db models to context @done(18-06-07 20:17)
+  ☐ Add more depth to auth system by adding refreshtoken. (Refresh and access tokens)
   ☐ Handle error for expired token (utils->jwt-middleware.js)
   ☐ Create 'Post' schema with CRUD resolvers.
 

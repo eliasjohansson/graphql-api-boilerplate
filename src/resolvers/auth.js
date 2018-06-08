@@ -1,38 +1,59 @@
-import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../utils/dotenv';
+import { ACCESS_SECRET, REFRESH_SECRET } from '../utils/dotenv';
 import { isNotAuthenticated } from '../utils/permissions';
+import { createTokens } from '../utils/auth';
 
-// HELPERS
-const createToken = async (userId) => {
-  const token = await jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '1h' });
-  return token;
-};
 
 // RESOLVERS
 const register = isNotAuthenticated.createResolver(async (parent, args, { models }) => {
+  let user;
+  console.log(args);
   try {
-    let user = new models.User(args);
+    user = new models.User(args);
     user = await user.save();
-    const token = createToken(user.id);
-    return { token, user };
   } catch (error) {
-    return new Error('You need to fill all the required fields');
+    return new Error(error);
   }
+
+  const refreshTokenSecret = user.password + REFRESH_SECRET;
+  const [accessToken, refreshToken] = await createTokens(
+    user.id,
+    ACCESS_SECRET,
+    refreshTokenSecret,
+  );
+  delete user.password;
+  return {
+    accessToken,
+    refreshToken,
+    user,
+  };
 });
+
 
 const login = isNotAuthenticated.createResolver(async (parent, args, { models }) => {
   const { password, email } = args;
+  let user;
   try {
-    const user = await models.User.findOne({ email }).select('+password').exec();
-    if (await user.comparePasswords(password)) {
-      const token = await createToken(user.id);
-      console.log(`TOKEN: ${token}`);
-      return { token, user };
+    user = await models.User.findOne({ email }).select('+password').exec();
+    const validPassword = await user.comparePasswords(password);
+    if (!validPassword) {
+      return new Error('Passwords did not match');
     }
-    return new Error('Passwords did not match');
   } catch (error) {
     return new Error('No user with that email was found');
   }
+
+  const refreshTokenSecret = user.password + REFRESH_SECRET;
+  const [accessToken, refreshToken] = await createTokens(
+    user.id,
+    ACCESS_SECRET,
+    refreshTokenSecret,
+  );
+  delete user.password;
+  return {
+    accessToken,
+    refreshToken,
+    user,
+  };
 });
 
 export default {

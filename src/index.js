@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import { formatError } from 'apollo-errors';
 import schema from './schema';
 import { PORT, MONGO_URI } from './utils/dotenv';
-import jwtMiddleware from './utils/jwt-middleware';
+import { addUserToReq } from './utils/auth';
 import models from './models';
 
 const app = express();
@@ -15,7 +15,7 @@ const server = http.Server(app);
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(jwtMiddleware);
+app.use(addUserToReq);
 
 app.use(
   '/graphql',
