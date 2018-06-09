@@ -59,7 +59,6 @@ export const addUserToReq = async (req, res, next) => {
     try {
       // If the Access Token is still valid set req.user to its payload
       const payload = await jwt.verify(accessToken, ACCESS_SECRET);
-      console.log(`Use current token from user: ${payload.user}`);
       req.user = payload.user;
     } catch (err) {
       // If token is invalid get the Refresh Token and try to generate new ones
@@ -77,8 +76,7 @@ export const addUserToReq = async (req, res, next) => {
         res.set('x-token', newTokens.accessToken);
         res.set('x-refresh-token', newTokens.refreshToken);
       }
-      console.log(`Use new token from user: ${newTokens.user}`);
-      req.user = newTokens.user;
+      req.user = newTokens.user.id;
     }
   }
   next();
