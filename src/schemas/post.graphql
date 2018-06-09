@@ -1,0 +1,19 @@
+type Post {
+  _id: ID!
+  text: String!
+  author: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Query {
+  getPosts: [Post!]
+  getPostById(_id: ID!): Post!
+}
+
+type Mutation {
+  createPost(text: String!): Post!
+  updatePost(_id: ID!, text: String!): Post!
+  deletePost(_id: ID!): Post!
+}
+

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { ACCESS_SECRET, REFRESH_SECRET } from './dotenv';
-import User from '../models/user';
+import User from '../models/User';
 
 // Create new tokens with given userId and secrets
 export const createTokens = (userId, secret1, secret2) => {

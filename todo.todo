@@ -2,6 +2,9 @@ GraphQL Server:
   ✔ Simplify resolvers to just return a promise @done(18-06-07 20:31)
   ✔ Attach db models to context @done(18-06-07 20:17)
   ✔ Add more depth to auth system by adding refreshtoken. (Refresh and access tokens) @done(18-06-08 19:08)
-  ☐ Create 'Post' schema with CRUD resolvers.
+  ✔ Create 'Post' schema with CRUD resolvers. @done(18-06-09 23:05)
+  ☐ Update and delete users
+  ☐ Admin role
+  ☐ Post metadata
 
   ☐ Investigate using Dataloader, for example to load db models
