@@ -12,3 +12,7 @@ type Query {
   getUserById(_id: ID!): User
 }
 
+type Mutation {
+  updateUser(username: String): User!
+  deleteUser: User!
+}
