@@ -1,5 +1,5 @@
 type Post {
-  _id: ID!
+  _id: ObjectID!
   text: String!
   author: String!
   createdAt: String!
@@ -16,4 +16,3 @@ type Mutation {
   updatePost(_id: ID!, text: String!): Post!
   deletePost(_id: ID!): Post!
 }
-
