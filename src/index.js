@@ -40,7 +40,10 @@ const server = createServer(app);
 apollo.installSubscriptionHandlers(server);
 
 server.listen(PORT, () => {
-  mongoose.connect(MONGO_URI);
+  mongoose.connect(
+    MONGO_URI,
+    { useNewUrlParser: true },
+  );
   console.log(`🚀 Server ready at http://localhost:${PORT}${apollo.graphqlPath}`);
   console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${apollo.subscriptionsPath}`);
 });

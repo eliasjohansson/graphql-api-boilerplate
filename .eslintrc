@@ -2,6 +2,7 @@
   "extends": "airbnb",
   "rules": {
     "no-underscore-dangle": 0,
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-console": "off"
   }
 }
